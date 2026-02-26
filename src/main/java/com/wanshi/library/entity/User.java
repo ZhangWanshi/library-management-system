@@ -3,7 +3,6 @@ package com.wanshi.library.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 
 @Getter
 @Setter
@@ -12,7 +11,7 @@ import java.io.Serializable;
 @Builder
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class User{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
