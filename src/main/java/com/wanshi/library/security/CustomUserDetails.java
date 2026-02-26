@@ -5,10 +5,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
-public class CustomUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private final User user;
 
@@ -16,9 +21,15 @@ public class CustomUserDetails implements UserDetails {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().getName()));
+        return List.of(
+                new SimpleGrantedAuthority("ROLE_" + user.getRole().getName())
+        );
     }
 
     @Override
@@ -35,4 +46,7 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() { return true; }
+
+    @Override
+    public boolean isEnabled() { return true; }
 }
