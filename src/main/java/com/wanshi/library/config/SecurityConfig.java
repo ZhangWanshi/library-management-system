@@ -24,7 +24,7 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf(csrf -> csrf.disable())
@@ -40,9 +40,9 @@ public class SecurityConfig {
                                 "/images/**"
                         ).permitAll()
 
-                        .requestMatchers("/admin", "/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/librarian", "/librarian/**").hasRole("LIBRARIAN")
-                        .requestMatchers("/member", "/member/**").hasRole("MEMBER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/librarian/**").hasRole("LIBRARIAN")
+                        .requestMatchers("/member/**").hasRole("MEMBER")
 
                         .anyRequest().authenticated()
                 )
@@ -58,7 +58,8 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config) {
+            AuthenticationConfiguration config) throws Exception {
+
         return config.getAuthenticationManager();
     }
 }

@@ -6,9 +6,12 @@ import com.wanshi.library.exception.InvalidRefreshTokenException;
 import com.wanshi.library.repository.UserRepository;
 import com.wanshi.library.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Map;
 
@@ -24,12 +27,17 @@ public class AuthController {
     @PostMapping("/login")
     public Map<String, String> login(@RequestBody User request) {
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException ex) {
+            // 返回 401 而不是 403
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
+        }
 
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow();
