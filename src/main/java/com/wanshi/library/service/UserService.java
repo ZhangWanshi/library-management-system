@@ -21,9 +21,6 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // -----------------------
-    // CREATE USER
-    // -----------------------
     public UserDTO createUser(CreateUserRequestDTO request) {
 
         if (userRepository.existsByUsername(request.getUsername())) {
@@ -49,21 +46,14 @@ public class UserService {
         return mapToDTO(savedUser);
     }
 
-    // -----------------------
-    // GET ALL USERS
-    // -----------------------
     public List<UserDTO> getAllUsers() {
 
         return userRepository.findAll()
                 .stream()
                 .map(this::mapToDTO)
                 .toList();
-                //.collect(Collectors.toList());
     }
 
-    // -----------------------
-    // MAPPING METHOD
-    // -----------------------
     private UserDTO mapToDTO(User user) {
         return UserDTO.builder()
                 .id(user.getId())

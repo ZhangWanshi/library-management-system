@@ -1,0 +1,43 @@
+
+.navbar-custom {
+    background-color: #0b3d2e;
+}
+.navbar-custom .navbar-brand {
+    color: white;
+}
+
+.navbar-custom a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-custom a:hover {
+    text-decoration: underline;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: #e6d5b8;
+    min-height: 90vh;
+    padding: 20px;
+}
+
+.sidebar button {
+    margin-bottom: 10px;
+}
+
+.content-area {
+    padding: 30px;
+    background-color: #f8f9fa;
+    flex: 1;
+}
+
+.login-container {
+    max-width: 400px;
+    margin-top: 80px;
+}
+
+.table th {
+    background-color: #0b3d2e;
+    color: white;
+}

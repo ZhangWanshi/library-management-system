@@ -19,9 +19,6 @@ public class AdminUserController {
 
     private final UserService userService;
 
-    // -----------------------
-    // CREATE USER
-    // -----------------------
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UserDTO> createUser(
@@ -34,9 +31,6 @@ public class AdminUserController {
                 .body(createdUser);
     }
 
-    // -----------------------
-    // GET ALL USERS
-    // -----------------------
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
