@@ -35,7 +35,6 @@ public class AuthController {
                     )
             );
         } catch (BadCredentialsException ex) {
-            // 返回 401 而不是 403
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid username or password");
         }
 

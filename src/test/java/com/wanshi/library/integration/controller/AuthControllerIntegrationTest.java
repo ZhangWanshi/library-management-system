@@ -1,4 +1,4 @@
-package com.wanshi.library.integration;
+package com.wanshi.library.integration.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wanshi.library.entity.Role;
