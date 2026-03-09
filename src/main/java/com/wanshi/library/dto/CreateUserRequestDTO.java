@@ -13,7 +13,7 @@ import lombok.*;
 public class CreateUserRequestDTO {
 
     @NotBlank(message = "Username is required")
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 100)
     private String username;
 
     @NotBlank(message = "Password is required")
