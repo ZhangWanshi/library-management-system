@@ -34,15 +34,22 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/",
                                 "/*.html",
-                                "/auth/**",
+                                "api/auth/**",
                                 "/css/**",
                                 "/js/**",
                                 "/images/**"
                         ).permitAll()
-
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/librarian/**").hasRole("LIBRARIAN")
-                        .requestMatchers("/member/**").hasRole("MEMBER")
+//
+//                        // Users 资源控制
+//                        .requestMatchers("/api/users/**").hasRole("ADMIN")
+//
+//                        // Books 资源控制
+//                        .requestMatchers(HttpMethod.GET, "/api/books").authenticated() // 登录即可看
+//                        .requestMatchers(HttpMethod.POST, "/api/books").hasAnyRole("LIBRARIAN", "ADMIN")
+//
+//                        // Borrowings 资源控制
+//                        .requestMatchers("/api/borrowings/mine", "/api/borrowings/borrow/**", "/api/borrowings/return/**").hasRole("MEMBER")
+//                        .requestMatchers("/api/borrowings/all").hasRole("LIBRARIAN")
 
                         .anyRequest().authenticated()
                 )
