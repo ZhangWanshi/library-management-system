@@ -4,7 +4,7 @@ function login() {
     const password = $("#password").val();
 
     $.ajax({
-        url: "/auth/login",
+        url: "/api/auth/login",
         type: "POST",
         contentType: "application/json",
         data: JSON.stringify({ username, password }),

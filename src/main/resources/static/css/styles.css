@@ -1,7 +1,7 @@
-
 .navbar-custom {
-    background-color: #0b3d2e;
+    background-color: #181c1b;
 }
+
 .navbar-custom .navbar-brand {
     color: white;
 }
@@ -15,9 +15,11 @@
     text-decoration: underline;
 }
 
+/* Sidebar */
+
 .sidebar {
     width: 220px;
-    background-color: #e6d5b8;
+    background-color: #9ab5ad;
     min-height: 90vh;
     padding: 20px;
 }
@@ -26,18 +28,43 @@
     margin-bottom: 10px;
 }
 
+/* Content */
+
 .content-area {
     padding: 30px;
     background-color: #f8f9fa;
     flex: 1;
 }
 
+/* Login */
+
 .login-container {
     max-width: 400px;
     margin-top: 80px;
 }
 
+/* Table */
+
 .table th {
-    background-color: #0b3d2e;
+    background-color: #3a6357;
     color: white;
+}
+
+/* ===== Custom Button Theme ===== */
+
+.btn-library {
+    background-color: #3a6357;
+    color: white;
+    border: none;
+}
+
+.btn-library:hover {
+    background-color: #2f5248;
+    color: white;
+}
+
+.btn-library:focus {
+    background-color: #2f5248;
+    color: white;
+    box-shadow: none;
 }

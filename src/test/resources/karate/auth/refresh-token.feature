@@ -6,7 +6,7 @@ Feature: Refresh token API
   Scenario: Refresh access token using refresh token
 
 # step1 login first
-    Given path '/auth/login'
+    Given path '/api/auth/login'
     And request
 """
 {
@@ -20,7 +20,7 @@ Feature: Refresh token API
     * def refreshToken = response.refreshToken
 
 # step2 call refresh API
-    Given path '/auth/refresh'
+    Given path 'api/auth/refresh'
     And request
 """
 {

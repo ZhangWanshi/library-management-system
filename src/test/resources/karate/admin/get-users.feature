@@ -6,7 +6,7 @@ Feature: Get users
 
   Scenario: Admin gets all users
 
-    Given path '/admin/users'
+    Given path '/api/users'
     When method get
     Then status 200
     And match response == '#[]'

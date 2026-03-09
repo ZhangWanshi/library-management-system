@@ -6,7 +6,7 @@ Feature: Create user
 
   Scenario: Admin creates new user
 
-    Given path '/admin/users'
+    Given path '/api/users'
     And request
     """
     {

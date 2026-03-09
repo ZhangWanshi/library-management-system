@@ -4,7 +4,7 @@ Feature: Global authentication for all roles
 
 # admin login
     Given url baseUrl
-    And path '/auth/login'
+    And path '/api/auth/login'
     And request
 """
 {
@@ -19,7 +19,7 @@ Feature: Global authentication for all roles
 
 # librarian login
     Given url baseUrl
-    And path '/auth/login'
+    And path '/api/auth/login'
     And request
 """
 {
@@ -34,7 +34,7 @@ Feature: Global authentication for all roles
 
 # member login
     Given url baseUrl
-    And path '/auth/login'
+    And path '/api/auth/login'
     And request
 """
 {

@@ -5,7 +5,7 @@ Feature: Login API
 
   Scenario: Admin login
 
-    Given path '/auth/login'
+    Given path '/api/auth/login'
     And request
 """
 {

@@ -2,7 +2,12 @@ function showUserManagement() {
 
     $("#content").html(`
         <h4>User Management</h4>
-        <button class="btn btn-success mb-3" onclick="openCreateUserModal()">Add New User</button>
+
+        <button class="btn btn-library mb-3"
+            onclick="openCreateUserModal()">
+            Add New User
+        </button>
+
         <table id="usersTable" class="display" style="width:100%">
             <thead>
                 <tr>
@@ -23,15 +28,32 @@ function loadUsers() {
     const token = localStorage.getItem("accessToken");
 
     $('#usersTable').DataTable({
+
         destroy: true,
+
         ajax: {
-            url: "/admin/users",
+            url: "/api/users",
             type: "GET",
+
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("Authorization", "Bearer " + token);
             },
-            dataSrc: ""
+
+            dataSrc: "",
+
+            error: function (xhr) {
+
+                if (xhr.status === 401 || xhr.status === 403) {
+
+                    alert("Session expired. Please login again.");
+
+                    localStorage.clear();
+
+                    loadPage("login");
+                }
+            }
         },
+
         columns: [
             { data: "id" },
             { data: "username" },
@@ -42,9 +64,17 @@ function loadUsers() {
 }
 
 function openCreateUserModal() {
+
     $("#createUserForm")[0].reset();
-    $("#createUserAlert").addClass("d-none").text("");
-    const modal = new bootstrap.Modal(document.getElementById('createUserModal'));
+
+    $("#createUserAlert")
+        .addClass("d-none")
+        .text("");
+
+    const modal = new bootstrap.Modal(
+        document.getElementById('createUserModal')
+    );
+
     modal.show();
 }
 
@@ -63,27 +93,40 @@ $(document).on("click", "#createUserBtn", function () {
     const token = localStorage.getItem("accessToken");
 
     $.ajax({
-        url: "/admin/users",
+        url: "/api/users",
         type: "POST",
         contentType: "application/json",
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
         data: JSON.stringify({ username, email, password, role }),
+
         success: function () {
-            const modalEl = document.getElementById('createUserModal');
-            const modal = bootstrap.Modal.getInstance(modalEl);
+
+            const modalEl =
+                document.getElementById('createUserModal');
+
+            const modal =
+                bootstrap.Modal.getInstance(modalEl);
+
             modal.hide();
 
             loadUsers();
         },
+
         error: function (xhr) {
+
             let msg = "Failed to create user.";
 
             if (xhr.responseJSON) {
+
                 const res = xhr.responseJSON;
 
-                if (res.username || res.password || res.email || res.role) {
+                if (res.username ||
+                    res.password ||
+                    res.email ||
+                    res.role) {
+
                     msg = Object.values(res).join("\n");
                 }
                 else if (res.error) {
@@ -97,5 +140,8 @@ $(document).on("click", "#createUserBtn", function () {
 });
 
 function showCreateUserError(message) {
-    $("#createUserAlert").removeClass("d-none").text(message);
+
+    $("#createUserAlert")
+        .removeClass("d-none")
+        .text(message);
 }
