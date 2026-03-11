@@ -21,6 +21,8 @@ function buildSidebar(role) {
                 onclick="showUserManagement()">
                 User Management
             </button>
+            <button class="btn btn-dark w-100 mb-2" onclick="openConfigRulesModal()"> Configure Rules
+            </button>
         `;
     }
 

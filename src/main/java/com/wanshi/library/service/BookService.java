@@ -1,9 +1,12 @@
 package com.wanshi.library.service;
 
 import com.wanshi.library.dto.BookDTO;
+import com.wanshi.library.dto.BorrowingRuleDTO;
 import com.wanshi.library.entity.Book;
+import com.wanshi.library.entity.BorrowingRule;
 import com.wanshi.library.enumtype.BookStatus;
 import com.wanshi.library.repository.BookRepository;
+import com.wanshi.library.repository.BorrowingRuleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
+    private final BorrowingRuleRepository ruleRepository;
+
+    /**
+     * US3 – Admin Configures Borrowing Rules
+     */
+    public void updateRules(BorrowingRuleDTO dto) {
+        BorrowingRule rule = ruleRepository.findById(1L).orElse(new BorrowingRule());
+        rule.setMaxBooksAllowed(dto.getMaxBooksAllowed());
+        rule.setBorrowDurationDays(dto.getBorrowDurationDays());
+        ruleRepository.save(rule);
+    }
 
     /**
      * US4 – Librarian Adds New Books
