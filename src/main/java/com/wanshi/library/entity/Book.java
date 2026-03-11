@@ -31,4 +31,7 @@ public class Book {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "cover_image_url")
+    private String coverImageUrl;
+
 }
