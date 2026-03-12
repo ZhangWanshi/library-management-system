@@ -103,15 +103,19 @@ $(document).on("click", "#createUserBtn", function () {
 
         success: function () {
 
-            const modalEl =
-                document.getElementById('createUserModal');
-
-            const modal =
-                bootstrap.Modal.getInstance(modalEl);
+            const modalEl = document.getElementById('createUserModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
 
             modal.hide();
 
             loadUsers();
+
+            $("#content").prepend(`
+        <div class="alert alert-success alert-dismissible fade show">
+            User created successfully!
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    `);
         },
 
         error: function (xhr) {

@@ -44,6 +44,57 @@ public class GlobalExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(errors);
     }
+    // 400 - Book not available
+    @ExceptionHandler(BookNotAvailableException.class)
+    public ResponseEntity<Map<String, String>> handleBookNotAvailable(
+            BookNotAvailableException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put(ERROR, ex.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(error);
+    }
+    // 400 - Borrow limit exceeded
+    @ExceptionHandler(BorrowLimitExceededException.class)
+    public ResponseEntity<Map<String, String>> handleBorrowLimitExceeded(
+            BorrowLimitExceededException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put(ERROR, ex.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(error);
+    }
+
+    // 404 - User not found
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleUserNotFound(
+            UserNotFoundException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put(ERROR, ex.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(error);
+    }
+
+    // 404 - Book not found
+    @ExceptionHandler(BookNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleBookNotFound(
+            BookNotFoundException ex) {
+
+        Map<String, String> error = new HashMap<>();
+        error.put(ERROR, ex.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(error);
+    }
+
 
     // Handle ResponseStatusException properly (401, 403 etc.)
     @ExceptionHandler(ResponseStatusException.class)

@@ -23,6 +23,7 @@ public class BookController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('LIBRARIAN','MEMBER')")
     public List<BookDTO> getBooks() {
         return bookService.getAllBooks();
     }

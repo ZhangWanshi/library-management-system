@@ -15,6 +15,6 @@ public class BookDTO {
     private String author;
     private String isbn;
     private String status;
-    private String categoryName;
+    private String category;
     private String coverImageUrl;
 }

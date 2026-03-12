@@ -2,14 +2,17 @@
 function showBookManagement() {
     $("#content").html(`
         <h4>Book Management</h4>
+        <div id="bookSuccess" class="alert alert-success d-none"></div>
         <button class="btn btn-library mb-3" onclick="openAddBookModal()">Add New Book</button>
         <table id="booksTable" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Cover</th> <th>Title</th>
+                    <th>Cover</th> 
+                    <th>Title</th>
                     <th>Author</th>
                     <th>ISBN</th>
+                    <th>Category</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -36,9 +39,8 @@ function loadBooksTable() {
             { data: "id" },
             {
                 data: "coverImageUrl",
-                render: function(data) {
-                    const imgUrl = data ?? '/images/default-book.png';
-                    return `<img src="${imgUrl}" alt="Cover" style="width:50px;height:70px;object-fit:cover;">`;
+                render: function(data = '/images/default-book.png') {
+                    return `<img src="${data}" alt="Cover" style="width:50px;height:70px;object-fit:cover;">`;
                 },
                 orderable: false,
                 searchable: false
@@ -46,6 +48,7 @@ function loadBooksTable() {
             { data: "title" },
             { data: "author" },
             { data: "isbn" },
+            { data: "category" },
             {
                 data: "status",
                 render: function(data) {
@@ -67,10 +70,11 @@ function submitNewBook() {
     const title = $("#bookTitle").val().trim();
     const author = $("#bookAuthor").val().trim();
     const isbn = $("#bookIsbn").val().trim();
+    const category = $("#bookCategory").val().trim();
     const coverImageUrl = $("#bookCoverUrl").val().trim();
 
     if (!title || !author || !isbn) {
-        $("#addBookAlert").removeClass("d-none").text("Title, Author, and ISBN are required.");
+        $("#addBookAlert").removeClass("d-none").text("Title, Author, Category, and ISBN are required.");
         return;
     }
 
@@ -83,10 +87,13 @@ function submitNewBook() {
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
-        data: JSON.stringify({ title, author, isbn, coverImageUrl }),
+        data: JSON.stringify({ title, author, isbn,category, coverImageUrl }),
         success: function () {
             const modalEl = document.getElementById('addBookModal');
             bootstrap.Modal.getInstance(modalEl).hide();
+            $("#bookSuccess")
+                .removeClass("d-none")
+                .text("Book created successfully!");
             loadBooksTable();
         },
         error: function (xhr) {

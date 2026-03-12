@@ -21,14 +21,17 @@ function buildSidebar(role) {
                 onclick="showUserManagement()">
                 User Management
             </button>
-            <button class="btn btn-dark w-100 mb-2" onclick="openConfigRulesModal()"> Configure Rules
+            <button class="btn btn-dark w-100 mb-2"
+                onclick="showRuleManagement()">
+                Configure Borrow Rules
             </button>
         `;
     }
 
     if (role === "LIBRARIAN") {
         sidebarHtml += `
-            <button class="btn btn-dark w-100 mb-2">
+            <button class="btn btn-dark w-100 mb-2"
+                onclick="showBookManagement()">
                 Book Management
             </button>
         `;
@@ -36,8 +39,7 @@ function buildSidebar(role) {
 
     if (role === "MEMBER") {
         sidebarHtml += `
-            <button class="btn btn-dark w-100 mb-2">
-                My Borrowings
+            <button class="btn btn-dark w-100 mb-2" onclick="showMemberBooks()"> Browse & Borrow Books
             </button>
         `;
     }
