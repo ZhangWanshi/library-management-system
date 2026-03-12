@@ -41,6 +41,10 @@ function buildSidebar(role) {
         sidebarHtml += `
             <button class="btn btn-dark w-100 mb-2" onclick="showMemberBooks()"> Browse & Borrow Books
             </button>
+            <button class="btn btn-dark w-100 mb-2"
+            onclick="showBorrowRecords()">
+            Borrow Records
+        </button>
         `;
     }
 
