@@ -122,10 +122,7 @@ function openBookModal(bookId) {
 
     if (book.status === 'AVAILABLE') {
         actionArea.html(`<button class="btn btn-library w-100" onclick="borrowBook(${book.id})">Borrow This Book</button>`);
-    } else if (book.status === 'BORROWED') {
-        actionArea.html(`<button class="btn btn-secondary w-100" onclick="returnBook(${book.id})">Return Book</button>`);
     }
-
     const modal = new bootstrap.Modal(document.getElementById('bookDetailModal'));
     modal.show();
 }
