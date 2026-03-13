@@ -30,11 +30,11 @@ public class BorrowController {
     }
 
     // US7 Return
-    @PostMapping("/return/{bookId}")
+    @PostMapping("/return/{recordId}")
     @PreAuthorize("hasRole('MEMBER')")
-    public ResponseEntity<Void> returnBook(@PathVariable Long bookId, Principal principal) {
+    public ResponseEntity<Void> returnBook(@PathVariable Long recordId, Principal principal) {
 
-        borrowService.returnBook(principal.getName(), bookId);
+        borrowService.returnBook(principal.getName(), recordId);
 
         return ResponseEntity.ok().build();
     }

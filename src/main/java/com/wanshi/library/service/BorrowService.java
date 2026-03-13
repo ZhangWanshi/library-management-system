@@ -3,7 +3,6 @@ package com.wanshi.library.service;
 import com.wanshi.library.dto.BorrowRecordDTO;
 import com.wanshi.library.entity.Book;
 import com.wanshi.library.entity.BorrowRecord;
-import com.wanshi.library.entity.User;
 import com.wanshi.library.enumtype.BookStatus;
 import com.wanshi.library.enumtype.BorrowingStatus;
 import com.wanshi.library.repository.BookRepository;
@@ -25,20 +24,20 @@ public class BorrowService {
 
     public List<BorrowRecordDTO> getMemberBorrowRecords(String username) {
 
-        List<BorrowRecord> records = borrowRecordRepository.findByMemberUsername(username);
+        List<BorrowRecord> borrowRecords = borrowRecordRepository.findByMemberUsername(username);
 
-        return records.stream()
-                .map(record -> BorrowRecordDTO.builder()
-                        .id(record.getId())
-                        .bookTitle(record.getBook().getTitle())
-                        .bookAuthor(record.getBook().getAuthor())
-                        .isbn(record.getBook().getIsbn())
-                        .status(record.getStatus().name())
-                        .borrowDate(record.getBorrowDate().toString())
-                        .dueDate(record.getDueDate().toString())
+        return borrowRecords.stream()
+                .map(borrowRecord -> BorrowRecordDTO.builder()
+                        .id(borrowRecord.getId())
+                        .bookTitle(borrowRecord.getBook().getTitle())
+                        .bookAuthor(borrowRecord.getBook().getAuthor())
+                        .isbn(borrowRecord.getBook().getIsbn())
+                        .status(borrowRecord.getStatus().name())
+                        .borrowDate(borrowRecord.getBorrowDate().toString())
+                        .dueDate(borrowRecord.getDueDate().toString())
                         .returnDate(
-                                record.getReturnDate() != null
-                                        ? record.getReturnDate().toString()
+                                borrowRecord.getReturnDate() != null
+                                        ? borrowRecord.getReturnDate().toString()
                                         : null
                         )
                         .build())
@@ -49,21 +48,18 @@ public class BorrowService {
      * US7 – Member Returns a Book
      */
     @Transactional
-    public void returnBook(String username, Long bookId) {
-        User user = userRepository.findByUsername(username).orElseThrow();
+    public void returnBook(String username, Long recordId) {
+        BorrowRecord borrowRecord = borrowRecordRepository.findById(recordId)
+                .orElseThrow(() -> new RuntimeException("Borrow record not found"));
 
-        BorrowRecord record = borrowRecordRepository.findByMemberIdAndBookIdAndStatus(user.getId(), bookId, BorrowingStatus.BORROWED)
-                .orElseThrow(() -> new RuntimeException("No active borrowing record found for this book"));
 
-        // 更新记录状态
-        record.setStatus(BorrowingStatus.RETURNED);
-        record.setReturnDate(LocalDate.now());
+        borrowRecord.setStatus(BorrowingStatus.RETURNED);
+        borrowRecord.setReturnDate(LocalDate.now());
 
-        // 更新书籍状态为可用
-        Book book = record.getBook();
+        Book book = borrowRecord.getBook();
         book.setStatus(BookStatus.AVAILABLE);
 
-        borrowRecordRepository.save(record);
+        borrowRecordRepository.save(borrowRecord);
         bookRepository.save(book);
     }
 }
