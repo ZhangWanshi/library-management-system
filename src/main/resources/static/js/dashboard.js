@@ -34,6 +34,10 @@ function buildSidebar(role) {
                 onclick="showBookManagement()">
                 Book Management
             </button>
+            <button class="btn btn-dark w-100 mb-2"
+            onclick="showBorrowManagement()">
+            Borrowing Management
+            </button>
         `;
     }
 
@@ -44,7 +48,7 @@ function buildSidebar(role) {
             <button class="btn btn-dark w-100 mb-2"
             onclick="showBorrowRecords()">
             Borrow Records
-        </button>
+            </button>
         `;
     }
 

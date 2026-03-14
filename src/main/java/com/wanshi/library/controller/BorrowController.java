@@ -47,4 +47,12 @@ public class BorrowController {
         return borrowService.getMemberBorrowRecords(principal.getName());
     }
 
+    // US8 – Librarian view all borrow records
+    @GetMapping("/all-records")
+    @PreAuthorize("hasRole('LIBRARIAN')")
+    public List<BorrowRecordDTO> getAllBorrowRecords() {
+
+        return borrowService.getAllBorrowRecords();
+    }
+
 }
