@@ -25,4 +25,8 @@ public class BorrowRecordDTO {
 
     private String returnDate;
 
+    private String memberUsername;
+
+    private String memberEmail;
+
 }

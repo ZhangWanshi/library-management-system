@@ -44,9 +44,7 @@ public class BorrowService {
                 .toList();
     }
 
-    /**
-     * US7 – Member Returns a Book
-     */
+    // US7 – Member Returns a Book
     @Transactional
     public void returnBook(String username, Long recordId) {
         BorrowRecord borrowRecord = borrowRecordRepository.findById(recordId)
@@ -61,5 +59,35 @@ public class BorrowService {
 
         borrowRecordRepository.save(borrowRecord);
         bookRepository.save(book);
+    }
+
+    // US8 – Librarian views all borrow records
+    public List<BorrowRecordDTO> getAllBorrowRecords() {
+
+        List<BorrowRecord> records = borrowRecordRepository.findAll();
+
+        return records.stream()
+                .map(borrowRecord -> BorrowRecordDTO.builder()
+                        .id(borrowRecord.getId())
+
+                        .memberUsername(borrowRecord.getMember().getUsername())
+                        .memberEmail(borrowRecord.getMember().getEmail())
+
+                        .bookTitle(borrowRecord.getBook().getTitle())
+                        .isbn(borrowRecord.getBook().getIsbn())
+
+                        .borrowDate(borrowRecord.getBorrowDate().toString())
+                        .dueDate(borrowRecord.getDueDate().toString())
+
+                        .returnDate(
+                                borrowRecord.getReturnDate() != null
+                                        ? borrowRecord.getReturnDate().toString()
+                                        : null
+                        )
+
+                        .status(borrowRecord.getStatus().name())
+
+                        .build())
+                .toList();
     }
 }
