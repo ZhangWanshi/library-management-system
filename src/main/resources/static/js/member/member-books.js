@@ -1,10 +1,7 @@
-// US5, 6, 7 - Member Views Books (Card Grid), Filters, and Borrows
-
 let allBooks = [];
 
 function showMemberBooks() {
     $("#content").html(`
-        <div id="memberMessage" class="alert alert-success d-none"></div>
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4>Library Books</h4>
             <div>
@@ -138,15 +135,13 @@ function borrowBook(bookId) {
             xhr.setRequestHeader("Authorization", "Bearer " + token);
         },
         success: function () {
-            $("#memberMessage")
-                .removeClass("d-none")
-                .text("Book borrowed successfully!");
+            showAlert("Book borrowed successfully!", "success");
             bootstrap.Modal.getInstance(document.getElementById('bookDetailModal')).hide();
             const currentCategory = $("#categoryFilter").val();
             loadBooksDataAndPreserveFilter(currentCategory);
         },
         error: function (xhr) {
-            alert(xhr.responseJSON?.error || "Failed to borrow book. You may have reached your limit.");
+            showAlert(xhr.responseJSON?.error || "Borrow failed. You may have reached your limit.", "danger");
         }
     });
 }

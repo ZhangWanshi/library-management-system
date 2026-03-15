@@ -4,8 +4,6 @@ function showBorrowRecords() {
 
         <h4>My Borrow Records</h4>
 
-        <div id="returnMessage" class="alert d-none"></div>
-
         <table id="borrowTable" class="display" style="width:100%">
 
             <thead>
@@ -124,20 +122,13 @@ function returnBookFromRecord(recordId) {
 
         success: function () {
 
-            $("#returnMessage")
-                .removeClass("d-none alert-danger")
-                .addClass("alert-success")
-                .text("Book returned successfully!");
+            showAlert("Book returned successfully!", "success");
 
             loadBorrowRecords();
         },
 
         error: function (xhr) {
-
-            $("#returnMessage")
-                .removeClass("d-none alert-success")
-                .addClass("alert-danger")
-                .text(xhr.responseJSON?.error || "Failed to return book");
+            showAlert(xhr.responseJSON?.error || "Failed to return book", "danger");
         }
 
     });

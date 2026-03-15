@@ -1,8 +1,6 @@
-// US4 for Librarian - Manage Books
 function showBookManagement() {
     $("#content").html(`
         <h4>Book Management</h4>
-        <div id="bookSuccess" class="alert alert-success d-none"></div>
         <button class="btn btn-library mb-3" onclick="openAddBookModal()">Add New Book</button>
         <table id="booksTable" class="display" style="width:100%">
             <thead>
@@ -91,13 +89,11 @@ function submitNewBook() {
         success: function () {
             const modalEl = document.getElementById('addBookModal');
             bootstrap.Modal.getInstance(modalEl).hide();
-            $("#bookSuccess")
-                .removeClass("d-none")
-                .text("Book created successfully!");
+            showAlert("Book created successfully!", "success");
             loadBooksTable();
         },
         error: function (xhr) {
-            $("#addBookAlert").removeClass("d-none").text(xhr.responseJSON?.error || "Failed to add book.");
+            showAlert(xhr.responseJSON?.error || "Failed to add book.", "danger");
         }
     });
 }

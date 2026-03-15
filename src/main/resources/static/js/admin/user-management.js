@@ -110,12 +110,7 @@ $(document).on("click", "#createUserBtn", function () {
 
             loadUsers();
 
-            $("#content").prepend(`
-        <div class="alert alert-success alert-dismissible fade show">
-            User created successfully!
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    `);
+            showAlert("User created successfully!", "success");
         },
 
         error: function (xhr) {
@@ -145,7 +140,5 @@ $(document).on("click", "#createUserBtn", function () {
 
 function showCreateUserError(message) {
 
-    $("#createUserAlert")
-        .removeClass("d-none")
-        .text(message);
+    showAlert(message, "danger");
 }

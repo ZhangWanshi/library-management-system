@@ -9,6 +9,10 @@ function initDashboard() {
     $("#logoutBtn").on("click", logout);
 
     buildSidebar(role);
+
+    if (role === "ADMIN") {
+        loadAdminDashboard();
+    }
 }
 
 function buildSidebar(role) {
@@ -18,12 +22,16 @@ function buildSidebar(role) {
     if (role === "ADMIN") {
         sidebarHtml += `
             <button class="btn btn-dark w-100 mb-2"
+                onclick="loadAdminDashboard()">
+                Analytic Dashboard
+            </button>
+            <button class="btn btn-dark w-100 mb-2"
                 onclick="showUserManagement()">
                 User Management
             </button>
             <button class="btn btn-dark w-100 mb-2"
                 onclick="showRuleManagement()">
-                Configure Borrow Rules
+                Borrowing Rules
             </button>
         `;
     }
@@ -35,19 +43,21 @@ function buildSidebar(role) {
                 Book Management
             </button>
             <button class="btn btn-dark w-100 mb-2"
-            onclick="showBorrowManagement()">
-            Borrowing Management
+                onclick="showBorrowManagement()">
+                Borrow Management
             </button>
         `;
     }
 
     if (role === "MEMBER") {
         sidebarHtml += `
-            <button class="btn btn-dark w-100 mb-2" onclick="showMemberBooks()"> Browse & Borrow Books
+            <button class="btn btn-dark w-100 mb-2" 
+                onclick="showMemberBooks()"> 
+                Books List
             </button>
             <button class="btn btn-dark w-100 mb-2"
-            onclick="showBorrowRecords()">
-            Borrow Records
+                onclick="showBorrowRecords()">
+                My Borrowing
             </button>
         `;
     }
@@ -56,6 +66,14 @@ function buildSidebar(role) {
 }
 
 function goHome() {
+
+    const role = localStorage.getItem("role");
+
+    if (role === "ADMIN") {
+        loadAdminDashboard();
+        return;
+    }
+
     $("#content").html(`
         <h4>Dashboard</h4>
         <p>Select an option from the sidebar.</p>

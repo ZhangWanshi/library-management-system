@@ -61,3 +61,34 @@ $(document).ready(function () {
 
     loadPage("dashboard");
 });
+
+function showAlert(message, type = "success") {
+
+    const alertId = "globalAlert";
+
+    $("#globalAlertArea").html(`
+
+        <div id="${alertId}"
+             class="alert alert-${type} alert-dismissible fade show">
+
+            ${message}
+
+            <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+            </button>
+
+        </div>
+
+    `);
+
+    setTimeout(function () {
+
+        $("#" + alertId).fadeOut(400, function () {
+
+            $(this).remove();
+
+        });
+
+    }, 3000);
+}

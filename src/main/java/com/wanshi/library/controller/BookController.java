@@ -1,4 +1,7 @@
-package com.wanshi.library.controller;import com.wanshi.library.dto.BookDTO;
+package com.wanshi.library.controller;
+
+import com.wanshi.library.dto.AdminDashboardDTO;
+import com.wanshi.library.dto.BookDTO;
 
 import com.wanshi.library.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +29,19 @@ public class BookController {
     @PreAuthorize("hasAnyRole('LIBRARIAN','MEMBER')")
     public List<BookDTO> getBooks() {
         return bookService.getAllBooks();
+    }
+
+    //US9– Admin Views Borrowing Statistics
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/summary")
+    public AdminDashboardDTO summary() {
+        return bookService.getSummaryStats();
+    }
+
+    //US9– Admin Views Borrowing Statistics
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/by-category")
+    public List<BookDTO> booksByCategory() {
+        return bookService.getBooksByCategory();
     }
 }
