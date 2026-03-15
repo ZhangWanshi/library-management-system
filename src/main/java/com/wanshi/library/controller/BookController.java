@@ -25,6 +25,12 @@ public class BookController {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(dto));
     }
 
+    @GetMapping("/categories")
+    @PreAuthorize("hasRole('LIBRARIAN')")
+    public List<String> getCategories() {
+        return bookService.getAllCategories();
+    }
+
     @GetMapping
     @PreAuthorize("hasAnyRole('LIBRARIAN','MEMBER')")
     public List<BookDTO> getBooks() {

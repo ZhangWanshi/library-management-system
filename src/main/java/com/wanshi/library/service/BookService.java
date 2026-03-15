@@ -59,6 +59,13 @@ public class BookService {
         return mapToBookDTO(saved);
     }
 
+    public List<String> getAllCategories() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(Category::getName)
+                .toList();
+    }
+
     /**
      * US5 – View Available Books
      */
