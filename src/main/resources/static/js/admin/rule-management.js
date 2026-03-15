@@ -8,16 +8,16 @@ function showRuleManagement() {
 
         <div class="card p-4" style="max-width:500px">
 
-            <div id="configRulesAlert" class="alert alert-danger d-none"></div>
-
             <div class="mb-3">
                 <label class="form-label">Max Books Allowed</label>
                 <input id="maxBooks" type="number" class="form-control">
+                <div id="maxBooksAlert" class="text-danger mt-1 d-none"></div>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Borrow Duration (Days)</label>
                 <input id="borrowDuration" type="number" class="form-control">
+                <div id="borrowDurationAlert" class="text-danger mt-1 d-none"></div>
             </div>
 
             <button class="btn btn-library mb-3" onclick="submitRules()">
@@ -68,12 +68,42 @@ function submitRules() {
     const maxBooksAllowed = $("#maxBooks").val();
     const borrowDurationDays = $("#borrowDuration").val();
 
-    if (!maxBooksAllowed || !borrowDurationDays) {
+    $("#maxBooksAlert").addClass("d-none").text("");
+    $("#borrowDurationAlert").addClass("d-none").text("");
 
-        $("#configRulesAlert")
+    let hasError = false;
+
+    if (maxBooksAllowed === "") {
+        $("#maxBooksAlert")
             .removeClass("d-none")
-            .text("All fields are required.");
+            .text("Max Books Allowed is required.");
+        hasError = true;
+        setTimeout(() => $("#maxBooksAlert").addClass("d-none"), 3000);
+    }
 
+    if (borrowDurationDays === "") {
+        $("#borrowDurationAlert")
+            .removeClass("d-none")
+            .text("Borrow Duration is required.");
+        hasError = true;
+        setTimeout(() => $("#borrowDurationAlert").addClass("d-none"), 3000);
+    }
+
+    if (hasError) return;
+
+    if (Number.parseInt(maxBooksAllowed) < 0) {
+        $("#maxBooksAlert")
+            .removeClass("d-none")
+            .text("Max Books Allowed must be >= 0.");
+        setTimeout(() => $("#maxBooksAlert").addClass("d-none"), 3000);
+        return;
+    }
+
+    if (Number.parseInt(borrowDurationDays) < 0) {
+        $("#borrowDurationAlert")
+            .removeClass("d-none")
+            .text("Borrow Duration must be >= 0.");
+        setTimeout(() => $("#borrowDurationAlert").addClass("d-none"), 3000);
         return;
     }
 
@@ -110,10 +140,9 @@ function submitRules() {
         },
 
         error: function (xhr) {
-
-            $("#configRulesAlert")
-                .removeClass("d-none")
-                .text(xhr.responseJSON?.error || "Failed to update rules.");
+            const errMsg = xhr.responseJSON?.error || "Failed to update rules.";
+            $("#maxBooksAlert").removeClass("d-none").text(errMsg);
+            setTimeout(() => $("#maxBooksAlert").addClass("d-none"), 3000);
         }
     });
 }
