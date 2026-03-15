@@ -46,14 +46,9 @@ class AdminUserE2ETest extends BaseE2ETest {
 
         driver.findElement(By.id("createUserBtn")).click();
 
-        wait.until(ExpectedConditions.textToBePresentInElementLocated(
-                By.cssSelector("#usersTable"),
-                username
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//table[@id='usersTable']//td[contains(text(),'" + username + "')]")
         ));
-
-        String tableText =
-                driver.findElement(By.cssSelector("#usersTable")).getText();
-
-        assertTrue(tableText.contains(username));
+        assertTrue(driver.getPageSource().contains(username));
     }
 }
