@@ -67,6 +67,17 @@ class RuleServiceTest {
     }
 
     @Test
+    void updateRules_shouldThrowException_whenNegativeDuration() {
+        BorrowingRuleDTO dto = new BorrowingRuleDTO();
+        dto.setMaxBooksAllowed(5);
+        dto.setBorrowDurationDays(-10);
+
+        assertThrows(IllegalArgumentException.class,
+                () -> ruleService.updateRules(dto));
+        verify(ruleRepository, never()).save(any());
+    }
+
+    @Test
     void getRules_shouldReturnRuleDTO() {
 
         when(ruleRepository.findById(1L)).thenReturn(Optional.of(rule));

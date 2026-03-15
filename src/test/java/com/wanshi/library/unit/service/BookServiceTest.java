@@ -82,6 +82,39 @@ class BookServiceTest {
     }
 
     @Test
+    void addBook_shouldUseDefaultImage_whenCoverImageNull() {
+        BookDTO dto = BookDTO.builder()
+                .title("Title")
+                .author("Author")
+                .isbn("123")
+                .category(null)
+                .coverImageUrl(null)
+                .build();
+
+        when(bookRepository.save(any())).thenAnswer(inv -> {
+            Book bookFound = inv.getArgument(0);
+            bookFound.setId(1L);
+            return bookFound;
+        });
+
+        BookDTO saved = bookService.addBook(dto);
+
+        assertEquals("/images/default-book.png", saved.getCoverImageUrl());
+        assertEquals("Title", saved.getTitle());
+    }
+
+    @Test
+    void getAllCategories_shouldReturnNames() {
+        Category cat1 = new Category(); cat1.setName("A");
+        Category cat2 = new Category(); cat2.setName("B");
+        when(categoryRepository.findAll()).thenReturn(List.of(cat1, cat2));
+
+        List<String> names = bookService.getAllCategories();
+
+        assertEquals(List.of("A", "B"), names);
+    }
+
+    @Test
     void getAllBooks_shouldReturnBookList() {
 
         when(bookRepository.findAll()).thenReturn(List.of(book));
@@ -113,6 +146,20 @@ class BookServiceTest {
     }
 
     @Test
+    void borrowBook_shouldSucceed_whenValid() {
+        when(userRepository.findByUsername("john")).thenReturn(Optional.of(user));
+        when(bookRepository.findById(1L)).thenReturn(Optional.of(book));
+        when(ruleRepository.findById(1L)).thenReturn(Optional.of(rule));
+        when(borrowRecordRepository.countByMemberAndStatus(user, BorrowingStatus.BORROWED)).thenReturn(0L);
+        when(borrowRecordRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+        when(bookRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
+
+        assertDoesNotThrow(() -> bookService.borrowBook("john", 1L));
+        assertEquals(BookStatus.BORROWED, book.getStatus());
+    }
+
+
+    @Test
     void borrowBook_shouldThrowWhenBookNotFound() {
 
         when(userRepository.findByUsername("john")).thenReturn(Optional.of(new User()));
@@ -142,14 +189,6 @@ class BookServiceTest {
                 () -> bookService.borrowBook("unknown", 1L));
     }
 
-    @Test
-    void borrowBook_shouldThrowBookNotFound() {
-        when(userRepository.findByUsername("john")).thenReturn(Optional.of(user));
-        when(bookRepository.findById(1L)).thenReturn(Optional.empty());
-
-        assertThrows(BookNotFoundException.class,
-                () -> bookService.borrowBook("john", 1L));
-    }
 
     @Test
     void borrowBook_shouldThrowBookNotAvailable() {
