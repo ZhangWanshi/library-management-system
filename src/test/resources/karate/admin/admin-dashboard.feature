@@ -34,3 +34,9 @@ Feature: Admin views borrowing statistics
     When method get
     Then status 200
     And match response == '#[]'
+
+  Scenario: Unauthorized user cannot view summary stats
+    Given path '/api/books/summary'
+    And header Authorization = 'Bearer ' + memberToken
+    When method get
+    Then status 403

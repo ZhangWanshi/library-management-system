@@ -4,6 +4,7 @@ import com.wanshi.library.dto.AdminDashboardDTO;
 import com.wanshi.library.dto.BookDTO;
 
 import com.wanshi.library.service.BookService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class BookController {
 
     @PostMapping // US4 - Librarian
     @PreAuthorize("hasRole('LIBRARIAN')")
-    public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO dto) {
+    public ResponseEntity<BookDTO> createBook(@Valid @RequestBody BookDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(dto));
     }
 

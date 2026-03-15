@@ -30,3 +30,40 @@ Feature: Admin manages borrowing rules
       borrowDurationDays: '#number'
     }
     """
+
+  Scenario: Borrowing limit is zero
+    Given path '/api/rules'
+    And request
+    """
+    {
+      "maxBooksAllowed": -1,
+      "borrowDurationDays": 7
+    }
+    """
+    When method put
+    Then status 400
+
+  Scenario: Borrow duration negative
+    Given path '/api/rules'
+    And request
+    """
+    {
+      "maxBooksAllowed": 5,
+      "borrowDurationDays": -1
+    }
+    """
+    When method put
+    Then status 400
+
+  Scenario: Unauthorized user tries to update rules
+    Given path '/api/rules'
+    And request
+    """
+    {
+      "maxBooksAllowed": 5,
+      "borrowDurationDays": 7
+    }
+    """
+    And header Authorization = 'Bearer ' + memberToken
+    When method put
+    Then status 403

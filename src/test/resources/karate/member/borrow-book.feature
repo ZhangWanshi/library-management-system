@@ -28,3 +28,17 @@ Feature: Member borrows a book
     And header Authorization = 'Bearer ' + memberToken
     When method post
     Then status 200
+
+  Scenario: Book already borrowed
+    * def bookId = 1
+    Given path '/api/borrowing/' + bookId
+    And header Authorization = 'Bearer ' + memberToken
+    When method post
+    Then status 400
+
+  Scenario: Borrow limit exceeded
+    * def bookId = 2
+    Given path '/api/borrowing/' + bookId
+    And header Authorization = 'Bearer ' + memberToken
+    When method post
+    Then status 400
