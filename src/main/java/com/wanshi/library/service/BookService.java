@@ -1,5 +1,6 @@
 package com.wanshi.library.service;
 
+import com.wanshi.library.dto.AdminDashboardDTO;
 import com.wanshi.library.dto.BookDTO;
 import com.wanshi.library.entity.*;
 import com.wanshi.library.enumtype.BookStatus;
@@ -105,6 +106,20 @@ public class BookService {
 
         borrowRecordRepository.save(borrowRecord);
         bookRepository.save(book);
+    }
+
+    //US9– Admin Views Borrowing Statistics
+    public AdminDashboardDTO getSummaryStats() {
+
+        return AdminDashboardDTO.builder()
+                .totalBooks(bookRepository.count())
+                .totalBorrowRecords(borrowRecordRepository.count())
+                .totalMembers(userRepository.countByRole_Name("MEMBER"))
+                .build();
+    }
+
+    public List<BookDTO> getBooksByCategory() {
+        return bookRepository.countBooksByCategory();
     }
 
     // Helper: Entity to DTO

@@ -17,4 +17,11 @@ public class BookDTO {
     private String status;
     private String category;
     private String coverImageUrl;
+
+    // for admin statistics
+    private long bookCount;
+    public BookDTO(String category, long bookCount) {
+        this.category = category;
+        this.bookCount = bookCount;
+    }
 }

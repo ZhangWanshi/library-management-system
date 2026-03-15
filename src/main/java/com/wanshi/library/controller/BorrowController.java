@@ -55,4 +55,11 @@ public class BorrowController {
         return borrowService.getAllBorrowRecords();
     }
 
+    //US9– Admin Views Borrowing Statistics
+    @GetMapping("/most-borrowed")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<BorrowRecordDTO> mostBorrowed() {
+        return borrowService.getMostBorrowedBooks();
+    }
+
 }

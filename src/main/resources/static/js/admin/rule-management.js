@@ -4,7 +4,7 @@ function showRuleManagement() {
 
         <h4>Borrowing Rules</h4>
 
-        <div id="rulesSuccess" class="alert alert-success d-none"></div>
+        <p id="currentRuleInfo" class="text-muted mb-3"></p>
 
         <div class="card p-4" style="max-width:500px">
 
@@ -20,9 +20,11 @@ function showRuleManagement() {
                 <input id="borrowDuration" type="number" class="form-control">
             </div>
 
-            <button class="btn btn-library" onclick="submitRules()">
+            <button class="btn btn-library mb-3" onclick="submitRules()">
                 Save Rules
             </button>
+
+            <div id="rulesSuccess" class="alert alert-success d-none"></div>
 
         </div>
     `);
@@ -46,6 +48,16 @@ function loadCurrentRules() {
 
             $("#maxBooks").val(data.maxBooksAllowed);
             $("#borrowDuration").val(data.borrowDurationDays);
+
+            $("#currentRuleInfo").text(
+                "Current rule: Max Books Allowed : "
+                + data.maxBooksAllowed +
+                ", Borrow Duration : "
+                + data.borrowDurationDays +
+                " days."
+            );
+            $("#maxBooks").val("");
+            $("#borrowDuration").val("");
         }
     });
 }
@@ -57,9 +69,11 @@ function submitRules() {
     const borrowDurationDays = $("#borrowDuration").val();
 
     if (!maxBooksAllowed || !borrowDurationDays) {
+
         $("#configRulesAlert")
             .removeClass("d-none")
             .text("All fields are required.");
+
         return;
     }
 
@@ -87,6 +101,12 @@ function submitRules() {
                 .text("Borrowing rules updated successfully!");
 
             loadCurrentRules();
+
+            setTimeout(function () {
+
+                $("#rulesSuccess").addClass("d-none");
+
+            }, 3000);
         },
 
         error: function (xhr) {

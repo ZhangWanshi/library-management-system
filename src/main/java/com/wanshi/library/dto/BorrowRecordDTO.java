@@ -29,4 +29,14 @@ public class BorrowRecordDTO {
 
     private String memberEmail;
 
+    private String category;
+
+    private long borrowCount;
+
+    public BorrowRecordDTO(String bookTitle, String category, long borrowCount) {
+        this.bookTitle = bookTitle;
+        this.category = category;
+        this.borrowCount = borrowCount;
+    }
+
 }

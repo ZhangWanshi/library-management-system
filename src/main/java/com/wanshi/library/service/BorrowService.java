@@ -90,4 +90,13 @@ public class BorrowService {
                         .build())
                 .toList();
     }
+
+    //US9– Admin Views Borrowing Statistics
+    public List<BorrowRecordDTO> getMostBorrowedBooks() {
+        return borrowRecordRepository
+                .findMostBorrowedBooks()
+                .stream()
+                .limit(5)
+                .toList();
+    }
 }
