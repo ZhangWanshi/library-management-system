@@ -21,15 +21,15 @@ function buildSidebar(role) {
 
     if (role === "ADMIN") {
         sidebarHtml += `
-            <button class="btn btn-dark w-100 mb-2"
+            <button id="menuAnalyticDashboard" class="btn btn-dark w-100 mb-2"
                 onclick="loadAdminDashboard()">
                 Analytic Dashboard
             </button>
-            <button class="btn btn-dark w-100 mb-2"
+            <button id="menuUserManagement" class="btn btn-dark w-100 mb-2"
                 onclick="showUserManagement()">
                 User Management
             </button>
-            <button class="btn btn-dark w-100 mb-2"
+            <button id="menuBorrowingRules" class="btn btn-dark w-100 mb-2"
                 onclick="showRuleManagement()">
                 Borrowing Rules
             </button>
@@ -38,11 +38,11 @@ function buildSidebar(role) {
 
     if (role === "LIBRARIAN") {
         sidebarHtml += `
-            <button class="btn btn-dark w-100 mb-2"
+            <button id="menuBookManagement" class="btn btn-dark w-100 mb-2"
                 onclick="showBookManagement()">
                 Book Management
             </button>
-            <button class="btn btn-dark w-100 mb-2"
+            <button id="menuBorrowManagement" class="btn btn-dark w-100 mb-2"
                 onclick="showBorrowManagement()">
                 Borrow Management
             </button>
@@ -51,11 +51,11 @@ function buildSidebar(role) {
 
     if (role === "MEMBER") {
         sidebarHtml += `
-            <button class="btn btn-dark w-100 mb-2" 
+            <button id="menuBookList" class="btn btn-dark w-100 mb-2" 
                 onclick="showMemberBooks()"> 
                 Books List
             </button>
-            <button class="btn btn-dark w-100 mb-2"
+            <button id="menuMyBorrowing" class="btn btn-dark w-100 mb-2"
                 onclick="showBorrowRecords()">
                 My Borrowing
             </button>

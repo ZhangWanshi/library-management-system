@@ -27,6 +27,7 @@ public class AuthHelper {
         driver.findElement(By.cssSelector("button")).click();
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("sidebar")));
+        wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("#sidebar button")));
     }
 
     public static void loginAsAdmin(

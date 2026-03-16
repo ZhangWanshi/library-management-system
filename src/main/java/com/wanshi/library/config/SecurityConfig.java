@@ -39,18 +39,6 @@ public class SecurityConfig {
                                 "/js/**",
                                 "/images/**"
                         ).permitAll()
-//
-//                        // Users 资源控制
-//                        .requestMatchers("/api/users/**").hasRole("ADMIN")
-//
-//                        // Books 资源控制
-//                        .requestMatchers(HttpMethod.GET, "/api/books").authenticated() // 登录即可看
-//                        .requestMatchers(HttpMethod.POST, "/api/books").hasAnyRole("LIBRARIAN", "ADMIN")
-//
-//                        // Borrowings 资源控制
-//                        .requestMatchers("/api/borrowings/mine", "/api/borrowings/borrow/**", "/api/borrowings/return/**").hasRole("MEMBER")
-//                        .requestMatchers("/api/borrowings/all").hasRole("LIBRARIAN")
-
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

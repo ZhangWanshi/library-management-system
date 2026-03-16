@@ -60,6 +60,27 @@ function loadBooksTable() {
 function openAddBookModal() {
     $("#addBookForm")[0].reset();
     $("#addBookAlert").addClass("d-none").text("");
+
+    const token = localStorage.getItem("accessToken");
+
+    $.ajax({
+        url: "/api/books/categories",
+        type: "GET",
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + token);
+        },
+        success: function(data) {
+            const select = $("#bookCategory");
+            select.empty(); // 清空
+            select.append(`<option value="">Select Category</option>`);
+            data.forEach(category => {
+                select.append(`<option value="${category}">${category}</option>`);
+            });
+        },
+        error: function() {
+            showAlert("Failed to load categories", "danger");
+        }
+    });
     const modal = new bootstrap.Modal(document.getElementById('addBookModal'));
     modal.show();
 }
@@ -68,11 +89,11 @@ function submitNewBook() {
     const title = $("#bookTitle").val().trim();
     const author = $("#bookAuthor").val().trim();
     const isbn = $("#bookIsbn").val().trim();
-    const category = $("#bookCategory").val().trim();
+    const category = $("#bookCategory").val();
     const coverImageUrl = $("#bookCoverUrl").val().trim();
 
-    if (!title || !author || !isbn) {
-        $("#addBookAlert").removeClass("d-none").text("Title, Author, Category, and ISBN are required.");
+    if (!title || !author || !isbn || !category) {
+        $("#addBookAlert").removeClass("d-none").text("Title, Author, ISBN, and Category are required.");
         return;
     }
 

@@ -7,12 +7,29 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.access.AccessDeniedException;
+
 import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private static final String ERROR = "error";
+
+    // 403
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, String>> handleAccessDenied(AccessDeniedException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(Map.of(ERROR, "Access Denied"));
+    }
+
+    // 401
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<Map<String, String>> handleAuthenticationException(AuthenticationException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(Map.of(ERROR, "Unauthorized"));
+    }
 
     // 409 - Resource already exists
     @ExceptionHandler(ResourceAlreadyExistsException.class)
@@ -25,6 +42,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .body(error);
+    }
+
+    // 400 - Illegal argument
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Map<String, String>> handleIllegalArgument(IllegalArgumentException ex) {
+        Map<String, String> error = new HashMap<>();
+        error.put(ERROR, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     // 400 - Validation errors
