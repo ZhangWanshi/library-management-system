@@ -63,7 +63,6 @@ function openAddBookModal() {
 
     const token = localStorage.getItem("accessToken");
 
-    // 获取 categories 并填充下拉框
     $.ajax({
         url: "/api/books/categories",
         type: "GET",

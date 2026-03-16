@@ -12,4 +12,9 @@ public class TestDataFactory {
         return "selenium_" + UUID.randomUUID().toString().substring(0, 8) + "@test.com";
     }
 
+    public static String randomIsbn() {
+        return "978-" + (1000000000 + (long)(Math.random() * 9000000000L));
+    }
+
+
 }

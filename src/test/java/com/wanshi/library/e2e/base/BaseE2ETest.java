@@ -35,7 +35,7 @@ public abstract class BaseE2ETest {
         //  ChromeOptions
         ChromeOptions options = new ChromeOptions();
         // Jenkins / CI
-        //options.addArguments("--headless=new");
+        options.addArguments("--headless=new");
         // Linux CI
         options.addArguments("--no-sandbox");
         // Docker / CI memory fix
