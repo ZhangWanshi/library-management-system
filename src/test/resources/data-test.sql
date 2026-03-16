@@ -11,8 +11,8 @@ INSERT INTO users (username, password, email, role_id) VALUES
 
 INSERT INTO books (title, author, isbn, status, category_id, cover_image_url) VALUES
                                                                                   ('The Pragmatic Programmer', 'Andy Hunt', '978-0201616224', 'AVAILABLE', (SELECT id FROM categories WHERE name = 'Technology'), '/images/default-book.png'),
-                                                                                  ('Clean Code', 'Robert C. Martin', '978-0132350884', 'AVAILABLE', (SELECT id FROM categories WHERE name = 'Technology'), null),
-                                                                                  ('The Great Gatsby', 'F. Scott Fitzgerald', '978-0743273565', 'BORROWED', (SELECT id FROM categories WHERE name = 'Fiction'), null);
+                                                                                  ('Clean Code', 'Robert C. Martin', '978-0132350884', 'BORROWED', (SELECT id FROM categories WHERE name = 'Technology'), '/images/default-book.png'),
+                                                                                  ('The Great Gatsby', 'F. Scott Fitzgerald', '978-0743273565', 'BORROWED', (SELECT id FROM categories WHERE name = 'Fiction'), '/images/default-book.png');
 
 
 INSERT INTO borrowing_rule (max_books_allowed, borrow_duration_days) VALUES (5, 14);
@@ -22,6 +22,13 @@ INSERT INTO borrow_records (user_id, book_id, borrow_date, due_date, status) VAL
     (
         (SELECT id FROM users WHERE username = 'member'),
         (SELECT id FROM books WHERE title = 'The Great Gatsby'),
+        CURRENT_DATE,
+        CURRENT_DATE + 14,
+        'BORROWED'
+    ),
+    (
+        (SELECT id FROM users WHERE username = 'member'),
+        (SELECT id FROM books WHERE title = 'Clean Code'),
         CURRENT_DATE,
         CURRENT_DATE + 14,
         'BORROWED'
