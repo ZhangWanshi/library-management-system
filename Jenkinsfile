@@ -37,7 +37,7 @@ pipeline {
 
     stage('SonarQube Analysis') {
       steps {
-        withSonarQubeEnv('sonarqube-local') {
+        withSonarQubeEnv('SonarServer') {
           bat 'mvn sonar:sonar'
         }
       }
@@ -45,7 +45,7 @@ pipeline {
 
     stage('Quality Gate') {
       steps {
-        timeout(time: 2, unit: 'MINUTES') {
+        timeout(time: 5, unit: 'MINUTES') {
           waitForQualityGate abortPipeline: true
         }
       }
@@ -63,9 +63,12 @@ pipeline {
 
   post {
     always {
-      junit '**/target/surefire-reports/*.xml'
-      junit '**/target/failsafe-reports/*.xml'
-      archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+       // Unit tests
+       junit '**/target/surefire-reports/*.xml'
+       // Integration tests (Failsafe + Karate + Selenium)
+       junit '**/target/failsafe-reports/*.xml'
+       junit '**/target/karate-reports/*.xml'
+       archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     }
   }
 }
