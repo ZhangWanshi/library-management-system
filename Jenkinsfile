@@ -56,7 +56,7 @@ pipeline {
         expression { params.RUN_UI_TESTS }
       }
       steps {
-        bat 'mvn verify'
+        bat 'mvn verify -DskipUnitTests=true'
       }
     }
   }
@@ -64,8 +64,8 @@ pipeline {
   post {
     always {
       junit '**/target/surefire-reports/*.xml'
-      unit '**/target/failsafe-reports/*.xml'
-      archiveArtifacts artifacts: '**/target/*.jar'
+      junit '**/target/failsafe-reports/*.xml'
+      archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
     }
   }
 }
