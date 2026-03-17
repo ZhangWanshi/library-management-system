@@ -1,6 +1,12 @@
 pipeline {
   agent any
 
+  environment {
+
+  GITHUB_TOKEN = credentials('github-token')
+
+  }
+
   options {
     skipDefaultCheckout(true)
   }
@@ -21,6 +27,15 @@ pipeline {
     stage('Checkout') {
       steps {
         checkout scm
+      }
+    }
+
+    stages {
+
+    stage('Secure Step') {
+      steps {
+        sh 'echo "Token length is ${#GITHUB_TOKEN}"'
+        }
       }
     }
 
