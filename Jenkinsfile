@@ -6,8 +6,14 @@ pipeline {
     }
 
     parameters {
-        booleanParam(name: 'RUN_UI_TESTS', defaultValue: false, description: 'Run Selenium UI tests')
-        booleanParam(name: 'RUN_INTEGRATION_TESTS', defaultValue: true, description: 'Run API/Integration tests (Karate)')
+        booleanParam(
+        name: 'RUN_UI_TESTS',
+        defaultValue: false,
+        description: 'Run Selenium UI tests')
+        booleanParam(
+        name: 'RUN_INTEGRATION_TESTS',
+        defaultValue: true,
+        description: 'Run API/Integration tests (Karate)')
     }
 
     stages {
@@ -48,11 +54,14 @@ pipeline {
                 echo 'Running SonarQube Analysis'
                 withSonarQubeEnv('SonarServer') {
                     // Windows bat + JaCoCo XML path, Quality Gate will read this
-                    bat 'mvn sonar:sonar -Dsonar.coverage.jacoco.xmlReportPaths=target\\site\\jacoco\\jacoco.xml ' +
-                        '-Dsonar.projectKey=library-management-system ' +
-                        '-Dsonar.projectName="Library Management System" ' +
-                        '-Dsonar.host.url=%SONAR_HOST_URL% ' +
-                        '-Dsonar.login=%SONAR_AUTH_TOKEN%'
+                    bat '''
+                    mvn sonar:sonar ^
+                    -Dsonar.projectKey=library-management-system ^
+                    -Dsonar.projectName="Library Management System" ^
+                    -Dsonar.host.url=%SONAR_HOST_URL% ^
+                    -Dsonar.login=%SONAR_AUTH_TOKEN% ^
+                    -Dsonar.coverage.jacoco.xmlReportPaths=target\\site\\jacoco\\jacoco.xml
+                    '''
                 }
             }
         }
@@ -79,7 +88,7 @@ pipeline {
             }
             steps {
                 echo 'Running UI Tests (Selenium)'
-                bat 'mvn verify -DskipUnitTests=true'
+                bat 'mvn verify'
             }
         }
 
@@ -87,16 +96,41 @@ pipeline {
 
     post {
         always {
-            echo 'Archiving test reports and artifacts'
-            // JUnit unit tests
+            echo 'Publishing reports...'
+
+            //Unit test reports
             junit '**/target/surefire-reports/*.xml'
-            // Failsafe integration tests
+
+            //Integration test reports
             junit '**/target/failsafe-reports/*.xml'
-            // Archive built JARs
+
+            // Archive JAR
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-            // Archive coverage reports
-            archiveArtifacts artifacts: 'target/site/jacoco/**', allowEmptyArchive: true
-            //HTML Coverage Report
+
+            // 1. JACOCO COVERAGE TREND
+            recordCoverage(
+                tools: [[parser: 'JACOCO', pattern: '**/jacoco.xml']]
+            )
+
+            // 2. HTML COVERAGE REPORT
+            publishHTML(target: [
+                allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'target/site/jacoco',
+                reportFiles: 'index.html',
+                reportName: 'JaCoCo Coverage Report'
+            ])
+
+            // 3. KARATE REPORT
+            publishHTML(target: [
+                allowMissing: true,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'target/karate-reports',
+                reportFiles: 'karate-summary.html',
+                reportName: 'Karate API Test Report'
+            ])
         }
     }
 }
