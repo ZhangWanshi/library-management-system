@@ -97,11 +97,6 @@ pipeline {
             // Archive coverage reports
             archiveArtifacts artifacts: 'target/site/jacoco/**', allowEmptyArchive: true
             //HTML Coverage Report
-            publishHTML([
-                         reportDir: 'target/site/jacoco',
-                         reportFiles: 'index.html',
-                         reportName: 'JaCoCo Coverage Report'
-                         ])
         }
     }
 }
