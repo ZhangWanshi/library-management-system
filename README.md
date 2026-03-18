@@ -203,13 +203,12 @@ The API follows REST principles:
 
 #### Example Endpoints:
 
-| Endpoint        | Method | Description |
-| --------------- | ------ | ----------- |
-| /api/auth/login | POST   | User login  |
-| /api/users      | POST   | Create user |
-| /api/books      | GET    | List books  |
-| /api/borrow     | POST   | Borrow book |
-| /api/return     | POST   | Return book |
+| Endpoint               | Method | Description |
+| ---------------        | ------ | ----------- |
+| /api/auth/login        | POST   | User login  |
+| /api/users             | POST   | Create user |
+| /api/books             | GET    | List books  |
+| /api/borrowing{bookId} | POST   | Borrow book |
 
 ---
 
