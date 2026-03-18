@@ -145,7 +145,7 @@ The REST API endpoints are documented to showcase requests, responses, DTO struc
 Run the application first, swagger API collection is available with the fowlling link:
 
 ```bash
-http://localhost:8080/swagger-ui.html
+http://localhost:8081/swagger-ui.html
 ```
 
 ---
@@ -225,7 +225,7 @@ mvn test
 mvn verify
 ```
 #### 3. View Test Coverage:
-After running mvn verify, JaCoCo enforces a 70% line coverage threshold. You can view the generated HTML report at:
+After running mvn verify, JaCoCo enforces a 80% line coverage threshold. You can view the generated HTML report at:
 
 ```bash
 target/site/jacoco/index.html
