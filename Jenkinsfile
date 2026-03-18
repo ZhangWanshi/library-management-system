@@ -57,10 +57,17 @@ pipeline {
             }
         }
 
+        stage('Wait Before Quality Gate') {
+            steps {
+                echo 'Waiting for SonarQube to process analysis...'
+                sleep(time: 20, unit: 'SECONDS')
+            }
+        }
+
         stage('Quality Gate') {
             steps {
                 echo 'Waiting for SonarQube Quality Gate (Coverage >= 80%)'
-                timeout(time: 10, unit: 'MINUTES') {
+                timeout(time: 15, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
@@ -89,6 +96,12 @@ pipeline {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             // Archive coverage reports
             archiveArtifacts artifacts: 'target/site/jacoco/**', allowEmptyArchive: true
+            //HTML Coverage Report
+            publishHTML([
+                         reportDir: 'target/site/jacoco',
+                         reportFiles: 'index.html',
+                         reportName: 'JaCoCo Coverage Report'
+                         ])
         }
     }
 }
