@@ -1,0 +1,242 @@
+/* ===== Login Page Background ===== */
+
+.login-page {
+
+    background-image: url('/images/login-background.png');
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    min-height: 100vh;
+}
+
+body {
+
+    background-color: #f8f9fa;
+
+    min-height: 100vh;
+
+    margin: 0;
+
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* ===== Navbar ===== */
+
+.navbar-custom {
+
+    background-color: #181c1b;
+
+    position: fixed;
+
+    top: 0;
+
+    width: 100%;
+
+    z-index: 1000;
+
+    height: 56px;
+}
+
+.navbar-custom .navbar-brand {
+
+    color: white;
+
+    font-weight: 600;
+}
+
+.navbar-custom a {
+
+    color: white;
+
+    text-decoration: none;
+}
+
+.navbar-custom a:hover {
+
+    text-decoration: underline;
+}
+
+
+/* ===== Sidebar ===== */
+
+.sidebar {
+
+    width: 220px;
+
+    background-color: #9ab5ad;
+
+    position: fixed;
+
+    top: 56px;
+
+    left: 0;
+
+    bottom: 0;
+
+    padding: 20px;
+
+    overflow-y: auto;
+}
+
+
+/* ===== Content Area ===== */
+
+.content-area {
+
+    margin-left: 220px;
+
+    margin-top: 56px;
+
+    padding: 30px;
+
+    background-color: #f8f9fa;
+
+    min-height: calc(100vh - 56px);
+
+    width: calc(100% - 220px);
+}
+
+
+/* ===== Login ===== */
+
+.login-container {
+
+    max-width: 400px;
+
+    margin: 120px auto;
+
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.92);
+
+    border-radius: 12px;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+    backdrop-filter: blur(6px);
+}
+
+
+/* ===== Table ===== */
+
+.table th {
+
+    background-color: #3a6357;
+
+    color: white;
+}
+
+
+/* ===== Custom Button Theme ===== */
+
+.btn-library {
+
+    background-color: #3a6357;
+
+    color: white;
+
+    border: none;
+}
+
+.btn-library:hover {
+
+    background-color: #2f5248;
+
+    color: white;
+}
+
+.btn-library:focus {
+
+    background-color: #2f5248;
+
+    color: white;
+
+    box-shadow: none;
+}
+
+
+/* ===== Dashboard Cards ===== */
+
+.card {
+
+    border: none;
+
+    border-radius: 10px;
+}
+
+.card h3 {
+
+    color: #3a6357;
+
+    font-weight: bold;
+}
+
+
+/* ===== Chart Spacing ===== */
+
+canvas {
+
+    margin-top: 10px;
+}
+
+
+/* ===== Responsive ===== */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+
+        width: 180px;
+    }
+
+    .content-area {
+
+        margin-left: 180px;
+
+        width: calc(100% - 180px);
+    }
+}
+
+/* ===== Chart Container ===== */
+
+.chart-container {
+
+    position: relative;
+
+    height: 320px;
+
+    width: 100%;
+}
+
+/* ============================= */
+/* Global Alert System */
+/* ============================= */
+
+#globalAlertArea {
+
+    position: fixed;
+
+    top: 70px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 420px;
+
+    z-index: 2000;
+}
+
+#globalAlertArea .alert {
+
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+
+    border-radius: 8px;
+
+    font-size: 14px;
+}

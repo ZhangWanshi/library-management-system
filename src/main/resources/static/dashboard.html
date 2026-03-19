@@ -1,0 +1,51 @@
+<div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-custom px-4 d-flex justify-content-between">
+        <div class="d-flex align-items-center gap-2">
+
+            <span style="font-size:20px">📚</span>
+
+            <button class="navbar-brand mb-0 h5 btn btn-link text-white text-decoration-none p-0"
+                    type="button"
+                    id="homeBtn">
+                Library System
+            </button>
+
+        </div>
+
+        <div class="text-white d-flex align-items-center gap-3">
+
+            <span>
+                Welcome, <span id="nav-username"></span>
+            </span>
+
+            <button type="button"
+                    id="logoutBtn"
+                    class="btn btn-link text-white text-decoration-none p-0">
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+    </div>
+
+    <!-- Global Alert Area -->
+    <div id="globalAlertArea"></div>
+
+    <!-- Main Content -->
+    <div id="content" class="content-area">
+        <h4>Dashboard</h4>
+        <p>Select an option from the sidebar.</p>
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="/js/admin/admin-dashboard.js"></script>
